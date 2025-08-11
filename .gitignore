@@ -8,7 +8,7 @@ out/
 /broadcast/**/dry-run/
 
 # Library files
-/lib/
+lib/
 
 # Docs
 /docs/
