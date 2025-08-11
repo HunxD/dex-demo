@@ -1,3 +1,5 @@
+//SPDX-License-Identifier: MIT
+
 // Layout of Contract:
 // version
 // imports

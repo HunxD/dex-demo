@@ -1,4 +1,5 @@
-pragma solidity ^0.8.0;
+//SPDX-License-Identifier: MIT
+
 // Layout of Contract:
 // version
 // imports
@@ -19,8 +20,9 @@ pragma solidity ^0.8.0;
 // internal
 // private
 // view & pure functions
+pragma solidity ^0.8.0;
 
-import {SwapERC20} from "./SwapErc20.sol";
+import {SwapERC20} from "./SwapERC20.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 
