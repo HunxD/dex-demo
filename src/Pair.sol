@@ -141,7 +141,6 @@ contract Pair is SwapERC20, ReentrancyGuard {
 
         if (amount0In == 0 && amount1In == 0) revert Pair__InsufficientInputAmount();
 
-        // 手续费处理（假设 0.3%）
         uint256 balance0Adjusted = balance0 * 1000 - amount0In * 3;
         uint256 balance1Adjusted = balance1 * 1000 - amount1In * 3;
         if (balance0Adjusted * balance1Adjusted < uint256(_reserve0) * uint256(_reserve1) * (1000 ** 2)) {
@@ -156,5 +155,9 @@ contract Pair is SwapERC20, ReentrancyGuard {
         s_reserve0 = uint112(balance0);
         s_reserve1 = uint112(balance1);
         s_blockTimestampLast = uint32(block.timestamp % 2 ** 32);
+    }
+
+    function sync() external nonReentrant {
+        _update(IERC20(token0).balanceOf(address(this)), IERC20(token1).balanceOf(address(this)));
     }
 }
