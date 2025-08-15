@@ -26,8 +26,10 @@ import {SwapERC20} from "./SwapERC20.sol";
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {Math} from "@openzeppelin/contracts/utils/math/Math.sol";
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 contract Pair is SwapERC20, ReentrancyGuard {
+    using SafeERC20 for IERC20;
     using Math for uint256;
 
     error Pair__NotFactory();
@@ -114,8 +116,8 @@ contract Pair is SwapERC20, ReentrancyGuard {
 
         _burn(address(this), liquidity);
 
-        IERC20(token0).transfer(to, amount0);
-        IERC20(token1).transfer(to, amount1);
+        IERC20(token0).safeTransfer(to, amount0);
+        IERC20(token1).safeTransfer(to, amount1);
 
         balance0 = IERC20(_token0).balanceOf(address(this));
         balance1 = IERC20(_token1).balanceOf(address(this));
@@ -130,8 +132,8 @@ contract Pair is SwapERC20, ReentrancyGuard {
         (uint112 _reserve0, uint112 _reserve1,) = getReserves();
         if (amount0Out > _reserve0 || amount1Out > _reserve1) revert Pair__InsufficientLiquidity();
 
-        if (amount0Out > 0) IERC20(token0).transfer(to, amount0Out);
-        if (amount1Out > 0) IERC20(token1).transfer(to, amount1Out);
+        if (amount0Out > 0) IERC20(token0).safeTransfer(to, amount0Out);
+        if (amount1Out > 0) IERC20(token1).safeTransfer(to, amount1Out);
 
         uint256 balance0 = IERC20(token0).balanceOf(address(this));
         uint256 balance1 = IERC20(token1).balanceOf(address(this));
